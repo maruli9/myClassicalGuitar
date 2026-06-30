@@ -1,0 +1,402 @@
+
+:root{
+  --bg:#0f0f10;
+  --panel:#17181b;
+  --panel2:#1f2024;
+  --text:#f5f5f7;
+  --muted:#a1a1a6;
+  --line:#2a2b30;
+  --blue:#3b82f6;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ================= GLOBAL TIMER ================= */
+#globalTimer{
+  position:fixed;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:28px;
+  font-weight:500;
+  color:var(--blue);
+
+  /* 🔥 NO BOX, NO FRAME */
+  background:transparent;
+  border:none;
+  padding:0;
+
+  /* 🔥 STOP TEXT JUMPING */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  letter-spacing:1px;
+}
+
+/* ================= LAYOUT ================= */
+.dashboard{
+  display:grid;
+  grid-template-columns:320px 1fr 320px;
+  min-height:100vh;
+  
+  
+}
+
+.panel{
+  background:var(--panel);
+  padding:16px;
+  border-right:1px solid var(--line);
+  
+}
+
+.center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+}
+
+/* ================= BLOCKS ================= */
+.block{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  background:var(--panel2);
+  padding:8px;
+  border-radius:10px;
+  margin:6px 0;
+}
+
+.block input{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:6px;
+  border-radius:8px;
+}
+
+.block input[type="number"]{width:70px}
+
+/* ================= BUTTONS ================= */
+button{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:8px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* ================= MAIN TIMER ================= */
+#timer{
+  font-size:92px;
+  font-weight:300;
+  color:var(--text);
+
+  /* 🔥 STOP JUMPING */
+  font-family: 'Inter', sans-serif;
+  
+  /* KLUCZOWE: Nadaje cyfrom równą szerokość, aby nie skakały */
+  font-variant-numeric: tabular-nums;
+}
+#sessionInfo{
+  color:var(--blue);
+  font-size:25px;
+  letter-spacing:.5px;
+  margin-top:-8px;
+  margin-bottom:12px;
+
+  font-variant-numeric: tabular-nums;
+}
+
+/* ================= PROGRESS ================= */
+.progress{
+  position:relative;
+  width:70%;
+  height:12px;
+  background:#222;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+#sessionBar{
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;   /* 🔥 STAŁE */
+  background:#2a2b30; /* jasny szary tło */
+  z-index:1;
+}
+#bar{
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:0%;
+  background:var(--blue);
+  z-index:2;
+}
+
+
+
+/* ================= SELECT ================= */
+select{
+  width:100%;
+  padding:8px;
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+
+small{color:var(--muted)}
+#endBanner{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:300px;
+  background:#ff3b3b;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  color:white;
+}
+
+#endBanner h1{
+  font-size:42px;
+  margin:0;
+  letter-spacing:1px;
+}
+
+#endBanner button{
+  margin-top:20px;
+  padding:12px 18px;
+  border:1px solid white;
+  color:white;
+  background:transparent;
+  font-size:16px;
+  cursor:pointer;
+}
+@media(max-width: 900px){
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+}
+.rep-form{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.rep-form input{
+  padding:6px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text);
+  border-radius:8px;
+}
+
+.rep-item{
+  background:var(--panel2);
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+.rep-title{
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.rep-bar{
+  width:100%;
+  height:8px;
+  background:#222;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.rep-fill{
+  height:100%;
+  background:var(--blue);
+  width:0%;
+}
+
+.rules, .penalty, .week{
+  background:#1f2024;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+  font-size:14px;
+  color:#f5f5f7;
+}
+#task{
+  font-size:62px;
+  color:var(--blue);
+  font-family: schoolbell, cursive;
+  letter-spacing:5px;
+}
+
+.penalty{
+  border:1px solid #ff3b3b;
+  color:#ff6b6b;
+}
+
+.week{
+  border:1px solid #3b82f6;
+}
+
+.ai-banner{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index: 111;
+}
+
+
+.ai-box{
+  width:420px;
+  background:#1f2024;
+  border:1px solid #2a2b30;
+  padding:20px;
+  border-radius:14px;
+  color:#f5f5f7;
+}
+
+.ai-box h2{
+  margin-top:0;
+  color:#3b82f6;
+}
+
+.ai-box button{
+  margin-top:12px;
+  width:100%;
+}
+
+.rep-feedback{
+  background:#1f2024;
+  border:1px solid #2a2b30;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+  color:#f5f5f7;
+  font-size:13px;
+  min-height:40px;
+}
+.right-panel{
+    overflow-y:auto;
+    height:100vh;
+}
+/* LEFT PANEL SCROLL */
+.left-panel{
+  overflow-y:auto;
+  height:100vh;
+}
+.coachBox{
+  position: fixed;
+  left: 400px;
+  bottom: 20px;
+
+  width: 320px;
+  background: #1f2024;
+  border: 1px solid #2a2b30;
+  border-radius: 12px;
+  padding: 12px;
+
+  color: #f5f5f7;
+  z-index: 9999;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.coachBox pre{
+  white-space: pre-wrap;   /* pozwala zawijać linie */
+  word-wrap: break-word;   /* łamie długie ciągi */
+  overflow-wrap: break-word;
+  margin: 0;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.stats{
+  position: fixed;
+  left: 400px;
+  bottom: 720px;
+
+  width: 320px;
+  background: #1f2024;
+  border: 1px solid #2a2b30;
+  border-radius: 12px;
+  padding: 12px;
+
+  color: #f5f5f7;
+  z-index: 9999;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.tekstLekcji{
+  font-size:24px;
+  color:var(--muted);
+}
+
+
+
+  .shape {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.9;
+    animation: move linear forwards;
+  }
+
+  @keyframes move {
+    from {
+      transform: translateX(-100px) translateY(-50%) rotate(0deg);
+    }
+    to {
+      transform: translateX(110vw) translateY(-50%) rotate(360deg);
+    }
+  }
+  #todayBar,
+#weekBar{
+
+    position:absolute;
+    left:0;
+    top:0;
+
+    height:100%;
+    width:0%;
+
+    background:#3b82f6;
+
+    transition:.4s;
+}
+
+#todayText,
+#weekText{
+
+    margin-top:8px;
+
+    font-size:14px;
+
+    color:#aaa;
+}
+

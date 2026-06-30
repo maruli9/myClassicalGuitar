@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guitar Practice Pro</title>
+<!-- <link rel="manifest" href="manifest.json"> -->
+<!-- <meta name="theme-color" content="#0f0f10"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Londrina+Outline&family=Lovers+Quarrel&family=Schoolbell&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+
+
+
+<div class="dashboard">
+
+<!-- LEFT -->
+<div class="panel left-panel">
+<h2>Plan treningowy</h2>
+
+<div id="blocks"></div>
+
+<button onclick="addBlock()">+ Dodaj blok</button>
+<button onclick="addRandom3()">3 losowe</button>
+
+<hr>
+
+<input id="planName" placeholder="Nazwa planu"><br><br>
+<button onclick="savePlan()">Zapisz plan</button>
+
+<br><br>
+
+<select id="plansList"></select>
+<button onclick="loadSelectedPlan()">Wczytaj plan</button>
+
+
+
+
+<hr>
+
+<h3>Discipline Dashboard</h3>
+
+<canvas id="disciplineCanvas"></canvas>
+
+<hr>
+
+<h3>Today's Goal</h3>
+
+<div class="progress">
+    <div id="todayBar"></div>
+</div>
+
+<div id="todayText">
+0 / 75 min
+</div>
+
+<br>
+
+<h3>Weekly Goal</h3>
+
+<div class="progress">
+    <div id="weekBar"></div>
+</div>
+
+<div id="weekText">
+0 / 600 min
+</div>
+<button onclick="renderCharts()" style="margin-top:10px;width:100%;">
+  🔄 Refresh Charts
+</button>
+
+</div>
+
+<!-- CENTER -->
+ <div class="center">
+<h2 id="task">gotowy do nowej sesji ?</h2>
+
+<div id="timer">00:00 <span class="tekstLekcji">do końca tej części</span></div>
+
+<div id="sessionInfo">
+  do końca sesji pozostało <span id="globalTime">00:00</span>
+</div>
+
+<div class="progress">
+  <div id="sessionBar"></div>
+  <div id="bar"></div>
+</div>
+
+<small>
+  Remaining: <span id="remain">0</span> min
+</small>
+
+<div>
+<button onclick="toggleTimer()">Start / Pause</button>
+<button onclick="nextBlock()">Skip</button>
+<button onclick="toggleFullscreen()">Fullscreen</button>
+</div>
+
+
+
+<div class="coachBox">
+  <h3>Auto Coach</h3>
+  <pre id="coachText"></pre>
+  <button onclick="runCoach()">🔄 Generate plan</button>
+
+  <div id="scoreFeedback" class="scoreFeedback"></div>
+</div>
+
+<div class="rules">
+
+  <h3>DAILY RULES</h3>
+
+  
+   <hr> <div>zmianę pozycji trzeba planować jeden  takt przed</div>
+  <div>1 takt przed i 1  takt po *20</div>
+  <div>1 focus session</div>
+  <div>loop 2 - 4 takty * 20 </div>
+  <div>4 takty z repertuaru in  *20</div>
+  <div>45 min practice</div>
+
+</div>
+
+<div class="penalty">
+  ⚠ Miss a rule = XP -30% next day
+</div>
+
+<div class="week">
+  Weekly mastery: 60%
+</div>
+
+
+</div>
+
+<!-- RIGHT -->
+<div class="panel right-panel">
+  <div id="repFeedback" class="rep-feedback"></div>
+<h2>Repertoire</h2>
+
+<div class="rep-form">
+  <input id="songTitle" placeholder="Utwór">
+  <input id="songAuthor" placeholder="Autor">
+  <input id="songBars" type="number" placeholder="Takty">
+  <button onclick="addSong()">Dodaj</button>
+</div>
+
+<hr>
+
+<div id="repList"></div>
+
+<hr>
+<div class="stats">
+<h3>Stats</h3>
+Level: <span id="level">1</span><br>
+XP: <span id="xp">0</span><br>
+Streak: <span id="streak">0</span>
+</div>
+</div>
+
+</div>
+<div id="endBanner">
+  <h1>SESJA ZAKOŃCZONA</h1>
+  <button onclick="closeEndBanner()">Powrót do programu</button>
+</div>
+<div id="aiBanner" class="ai-banner">
+  <div class="ai-box">
+    <h2>Practice AI Report</h2>
+    <div id="aiText"></div>
+    <button onclick="closeAIBanner()">OK</button>
+  </div>
+</div>
+
+
+
+
+
+<div id="disciplineModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:999999; align-items:center; justify-content:center;">
+  
+  <div style="width:420px; background:#1f2024; border:1px solid #2a2b30; padding:16px; border-radius:12px; color:#fff;">
+    
+    <h2 style="color:#3b82f6;margin-top:0;">Discipline Review</h2>
+
+    <label><input type="checkbox" id="d_hasPlan"> Miałem jasny plan</label><br>
+    <label><input type="checkbox" id="d_followedPlan"> Trzymałem się planu bloków</label><br>
+    <label><input type="checkbox" id="d_fullSession"> Zrobiłem całą sesję</label><br>
+    <label><input type="checkbox" id="d_skipped"> Pominąłem materiał</label><br>
+    <label><input type="checkbox" id="d_cut"> Skróciłem sesję</label><br>
+    <label><input type="checkbox" id="d_random"> Ćwiczyłem bez planu</label><br>
+    <label><input type="checkbox" id="d_improved"> Poprawiłem trudny fragment</label><br>
+    <label><input type="checkbox" id="d_control"> Trudne fragmenty były pod kontrolą</label><br>
+    <label><input type="checkbox" id="d_mistakes"> Dużo błędów</label><br>
+
+    <button onclick="submitDiscipline()" style="margin-top:12px;width:100%;">Zapisz sesję</button>
+  <div id="coachReport"></div>
+  
+  </div>
+
+</div>
+
+
+
+<script src="js/app.js"></script>
+</body>
+</html>
