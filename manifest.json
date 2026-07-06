@@ -1,0 +1,16 @@
+{
+  "name": "Guitar Practice Pro",
+  "short_name": "Guitar",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f0f10",
+  "theme_color": "#0f0f10",
+  "icons": [
+    
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
